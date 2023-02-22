@@ -1,0 +1,129 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="col-12 text-center pt-2">
+    <span class="navbar-brand fw-bold">Meu Perfil</span>
+
+    <!-- <a class="navbar-brand fw-bold float-end me-2" style="cursor:pointer" (click)="novoEvento(newEdit)"
+      title="Novo Evento"> <fa-icon [icon]="faNew" class=" text-primary"></fa-icon> </a> -->
+  </div>
+</nav>
+<div class="row">
+  <div class="col-md-6 offset-md-3 mt-5">
+    <div class="row">
+      <div class="col-md-12 border-start mb-3">
+        <div class="text-gray-400 text-secondary">Nome</div>
+        <div class="float-start fw-bold">{{dadosPerfil.nome}}&nbsp;</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 border-start mb-3">
+        <div class="text-gray-400 text-secondary">Usuário</div>
+        <div class="float-start fw-bold">{{dadosPerfil.username}}&nbsp;</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <hr>
+        <a class="float-start btn btn-outline-secondary" title="Voltar"><fa-icon [icon]="faArrowLeft"></fa-icon></a>
+        <a class="float-end btn btn-outline-primary" title="Alterar Nome" (click)="openModal(nome)"><fa-icon
+            [icon]="faEdit"></fa-icon></a>
+        <a class="float-end btn btn-outline-success me-3" title="Alterar Senha" (click)="openModal(senha)"><fa-icon
+            [icon]="faPass"></fa-icon></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #nome>
+  <div class="modal-header p-0 pt-2 ps-3 pe-3">
+    <h5 class="modal-title pull-left pt-0">Alterar Nome de Usuário</h5>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-4 pb-3">
+    <form [formGroup]="perfilForm" (submit)="handleSubmit()">
+      <div class="row">
+        <div class="col-12">
+          <div class="alert alert-danger" role="alert" *ngIf="erro">
+            <div *ngFor="let erro of erros">
+              {{erro}}<br>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Nome <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="nome" style="text-transform: uppercase;">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 mb-0">
+          <hr>
+          <button class="btn btn-secondary float-start me-2" type="button" title="Cancelar"
+            (click)="closeModal()"><fa-icon [icon]="faCancel"></fa-icon></button>
+          <button class="btn btn-success float-end" title="Gravar"><fa-icon [icon]="faSave"></fa-icon></button>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #senha>
+  <div class="modal-header p-0 pt-2 ps-3 pe-3">
+    <h5 class="modal-title pull-left pt-0">Alterar Senha</h5>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-4 pb-3">
+    <form [formGroup]="perfilSenha" (submit)="handleSenha()">
+      <div class="row">
+        <div class="col-12">
+          <div class="alert alert-danger" role="alert" *ngIf="erro">
+            <div *ngFor="let erro of erros">
+              {{erro}}<br>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Senha atual <span class="text-danger">*</span></label>
+            <input type="password" class="form-control" formControlName="passwordBefore">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Nova Senha <span class="text-danger">*</span></label>
+            <input type="password" class="form-control" formControlName="password">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Confirme a Nova Senha <span
+                class="text-danger">*</span></label>
+            <input type="password" class="form-control" formControlName="passwordConfirm">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 mb-0">
+          <hr>
+          <button class="btn btn-secondary float-start me-2" type="button" title="Cancelar"
+            (click)="closeModal()"><fa-icon [icon]="faCancel"></fa-icon></button>
+          <button class="btn btn-success float-end" title="Gravar"><fa-icon [icon]="faSave"></fa-icon></button>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>

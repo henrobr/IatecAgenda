@@ -1,0 +1,69 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="col-12 text-center pt-2">
+    <span class="navbar-brand fw-bold">Eventos Compartilhados</span>
+  </div>
+</nav>
+<div class="row">
+  <div class="col-md-8 offset-md-2 grid-agenda-comp">
+    <div class="card mb-2 shadow" *ngFor="let agenda of evntsCompartilhados">
+      <div class="card-body p-2">
+        <div class="row">
+          <div class="col-sm-2 p-0 ms-3 me-2 fw-bold">{{funcao.ToDateBr(agenda.data!)}} {{agenda.hora}}</div>
+          <div class="col-sm-9 ps-3 border">
+            {{agenda.nome}}
+            <a class="btn btn-sm btn-outline-success float-end" style="cursor: pointer;" title="Importar Evento"
+              (click)="impEvento(delete, agenda)"><fa-icon [icon]="faUp"></fa-icon></a>
+            <a class="btn btn-sm btn-outline-primary float-end me-2" style="cursor: pointer;" title="Visualizar Evento"
+              routerLink="/"><fa-icon [icon]="faEye"></fa-icon></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-2 shadow" *ngIf="evntsCompartilhados?.length === 0">
+      <div class="card-body p-2" title="Nenhum Evento encontrado">
+        <div class="row">
+          <div class="col-sm-12 p-0 ms-3 me-0 fw-bold">Nenhum evento compartilhado encontrado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <ng-template #view>
+  <div class="modal-header p-0 pt-2 ps-3 pe-3">
+    <h5 class="modal-title pull-left pt-0">{{titleModal}}</h5>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-4 pb-3">
+    <app-view [id]="idEvento"></app-view>
+  </div>
+</ng-template> -->
+
+<ng-template #delete>
+  <div class="modal-body p-4 text-center">
+    <div *ngIf="sendingImp">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div *ngIf="!sendingImp && errorImp">
+      <div class="alert alert-danger" role="alert">
+        {{errorImp}}
+      </div>
+    </div>
+    <div *ngIf="!sendingImp">
+      <h5 class="mb-3">Deseja importar este evento para a sua agenda?</h5>
+      <p class="mb-1">{{impEventoOps?.nome}}</p>
+      <p class="mb-1">{{impEventoOps?.data}}</p>
+      <p class="mb-1">{{impEventoOps?.hora}}</p>
+    </div>
+  </div>
+  <div class="modal-footer flex-nowrap p-0" *ngIf="!sendingImp">
+    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end"
+      (click)="handleImport(impEventoOps?.id!)">Sim</button>
+    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"
+      (click)="modalRef?.hide()"><strong>Não</strong></button>
+  </div>
+</ng-template>

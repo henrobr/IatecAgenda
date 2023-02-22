@@ -1,0 +1,16 @@
+.linkCard {
+    cursor: pointer;
+}
+
+.linkCard:hover {
+    background-color: #e9ecef;
+    transition: 0.5s;
+    /* opacity: 0.7; */
+}
+
+.grid-agenda {
+    max-height: 425px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    white-space: nowrap;
+}

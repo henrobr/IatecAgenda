@@ -1,0 +1,15 @@
+<nav class="navbar bg-light shadow mb-3">
+  <div class="container-fluid">
+    <div class="col-12 text-center">
+      <a class="navbar-brand float-start" style="cursor: pointer;" routerLink="/"><fa-icon
+          [icon]="faHome"></fa-icon></a>
+      <!-- <a class="navbar-brand float-start" style="cursor: pointer;" title="Novo Evento"><fa-icon
+          [icon]="faNew"></fa-icon></a> -->
+      <span style="font-size: 1.25rem; font-weight: bold;" class="text-center">Agenda Iatec</span>
+      <a class="navbar-brand float-end" style="cursor: pointer;" title="Sair" (click)="sair()"><fa-icon
+          [icon]="faOut"></fa-icon></a>
+      <a class="navbar-brand float-end" style="cursor: pointer;" routerLink="perfil" routerLinkActive="active"
+        title="Visualizar Perfil"><fa-icon [icon]="faUserEdit"></fa-icon></a>
+    </div>
+  </div>
+</nav>

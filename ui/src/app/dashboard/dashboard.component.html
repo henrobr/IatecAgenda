@@ -1,0 +1,184 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="col-12 text-center pt-2">
+    <span class="navbar-brand fw-bold">{{title}}</span>
+
+    <a class="navbar-brand fw-bold float-end me-2" style="cursor:pointer" (click)="novoEvento(newwt)"
+      title="Novo Evento">
+      <fa-icon [icon]="faNew" class=" text-primary"></fa-icon> </a>
+  </div>
+</nav>
+
+<div class="row">
+  <div class="col-md-6 grid-agenda">
+    <table class="table table-borderless mb-2">
+      <thead>
+        <tr>
+          <th class="p-0 mb-2">Eventos de Hoje </th>
+        </tr>
+      </thead>
+    </table>
+    <div class="card mb-2 shadow" *ngFor="let agenda of agendaHoje" (click)="viewEvento(viewwt, agenda.id)">
+      <div class="card-body p-2 linkCard" title="Visualizar Evento">
+        <div class="row">
+          <div class="col-sm-1 p-0 ms-3 me-0 fw-bold">{{agenda.hora}}</div>
+          <div class="col-sm-10 p-0 ms-3">
+            {{agenda.nome}}
+            <span class="badge text-bg-success float-end me-4" *ngIf="agenda.compartilhado">c</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-2 shadow" *ngIf="agendaHoje?.length === 0">
+      <div class="card-body p-2" title="Nenhum Evento">
+        <div class="row">
+          <div class="col-sm-12 p-0 ms-3 me-0 fw-bold">Nenhum evento para hoje</div>
+          <!-- <div class="col-sm-10 p-0 ms-3">
+                                {{agenda.nome}}
+                                <span class="badge text-bg-success float-end me-4" *ngIf="agenda.compartilhado">c</span>
+                            </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 grid-agenda ">
+    <form [formGroup]="agendaSlt">
+      <table class="table table-borderless mb-2">
+        <thead>
+          <tr>
+            <th class="p-0 mb-2 pb-3">Próximos Eventos</th>
+            <th>
+              <select class="form-select form-select-sm" formControlName="idDias"
+                (ngModelChange)="loadProximosEventos()">
+                <option selected value=7>7 Dias</option>
+                <option value=15>15 Dias</option>
+                <option value=30>30 Dias</option>
+              </select>
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </form>
+    <div class="card mb-2 shadow" *ngFor="let agenda of agendaProximo" (click)="viewEvento(viewwt, agenda.id)">
+      <div class="card-body p-2 linkCard" title="Visualizar Evento">
+        <div class="row">
+          <!-- <div class="col-sm-2 p-0 ms-3 me-0 fw-bold"></div> -->
+          <div class="col-sm-12 p-0 ms-3">
+            <span class="fw-bold">{{viewDate(agenda.data)}} {{agenda.hora}}</span>
+            <br>{{agenda.nome}}
+            <span class="badge text-bg-success float-end me-4" *ngIf="agenda.compartilhado">c</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-2 shadow" *ngIf="agendaProximo?.length === 0">
+      <div class="card-body p-2" title="Nenhum Evento">
+        <div class="row">
+          <div class="col-sm-12 p-0 ms-3 me-0 fw-bold">Nenhum evento para os próximos {{diasPrx }} dias</div>
+          <!-- <div class="col-sm-10 p-0 ms-3">
+                                    {{agenda.nome}}
+                                    <span class="badge text-bg-success float-end me-4" *ngIf="agenda.compartilhado">c</span>
+                                </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-8">
+    <form [formGroup]="formSearch" (ngSubmit)="handleSearch()">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="text-gray-400 fw-bold">Pesquisar Por</div>
+          <div class="mb-3">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="inlineRadio1" name="particular" [value]="true"
+                (change)="setOpc(true)" checked>
+              <label class="form-check-label" for="inlineRadio1">Nome</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="particular" id="inlineRadio2" [value]="false"
+                (change)="setOpc(false)">
+              <label class="form-check-label" for="inlineRadio2">Data</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9 mt-3">
+          <div class="input-group mb-0">
+            <input type="text" class="form-control" formControlName="search" *ngIf="opc">
+            <input type="date" class="form-control" formControlName="dtEvento" *ngIf="!opc">
+            <button class="btn btn-outline-primary" id="button-addon2"><fa-icon [icon]="faSearch"
+                class=" text-primary"></fa-icon></button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <hr>
+    <div class="row">
+      <div class="col-md-12 grid-agenda">
+        <div class="card mb-2 shadow" *ngFor="let agenda of agendaSearchs" (click)="viewEvento(viewwt, agenda.id)">
+          <div class="card-body p-2 linkCard" title="Visualizar Evento">
+            <div class="row">
+              <div class="col-sm-2 p-0 ms-3 me-2 fw-bold">{{viewDate(agenda.data)}} {{agenda.hora}}</div>
+              <div class="col-sm-9 p-0 ms-3">
+                {{agenda.nome}}
+                <span class="badge text-bg-success float-end me-4" *ngIf="agenda.compartilhado">c</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-2 shadow" *ngIf="agendaSearchs?.length === 0">
+          <div class="card-body p-2" title="Nenhum Evento encontrado">
+            <div class="row">
+              <div class="col-sm-12 p-0 ms-3 me-0 fw-bold">Nenhum evento encontrado</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <a class="float-start btn btn-outline-secondary mt-3 me-3" title="Voltar"
+      routerLink="eventos/compartilhados"><fa-icon [icon]="faShare"></fa-icon>
+      Compartilhados</a>
+    <a class="float-start btn btn-outline-primary mt-3" title="Voltar" (click)="novoEvento(newwt)"><fa-icon
+        [icon]="faPlus"></fa-icon> Novo</a>
+  </div>
+</div>
+
+
+<ng-template #newwt>
+  <div class="modal-header p-0 pt-2 ps-3 pe-3">
+    <h5 class="modal-title pull-left pt-0">{{titleModal}}</h5>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-4 pb-3">
+    <app-eventos [idAgenda]="idEvento"></app-eventos>
+  </div>
+</ng-template>
+
+<ng-template #viewwt>
+  <div class="modal-header p-0 pt-2 ps-3 pe-3">
+    <h5 class="modal-title pull-left pt-0">{{titleModal}}</h5>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-4 pb-3">
+    <app-view [id]="idEvento"></app-view>
+  </div>
+</ng-template>
+
+<ng-template #vieweditw>
+  <div class="modal-header p-0 pt-2 ps-3 pe-3">
+    <h5 class="modal-title pull-left pt-0">{{titleModal}}</h5>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-4 pb-3">
+    <app-eventos [idAgenda]="idEvento"></app-eventos>
+  </div>
+</ng-template>

@@ -1,0 +1,9 @@
+﻿global using System.ComponentModel.DataAnnotations;
+global using System.ComponentModel.DataAnnotations.Schema;
+global using Microsoft.AspNetCore.Identity;
+global using api.Data;
+global using api.Models.Dbase;
+global using api.Models.Forms;
+global using HLibrary;
+global using api.Models.Response;
+global using api.Models.Views;

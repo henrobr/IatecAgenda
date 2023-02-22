@@ -1,0 +1,135 @@
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-6 offset-md-3">
+            <div style="font-size: 1.25rem; font-weight: bold;" class="mt-3">{{title}}
+                <div class="spinner-grow text-info float-end" role="status" *ngIf="reloading">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="showView">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="row">
+                    <div *ngIf="loading">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <div *ngIf="sending">
+                        <div class="col-12"><span class="spinner-border text-primary" role="status"
+                                aria-hidden="true"></span>
+                            <span class="ms-3 pb-3">Enviando dados</span>
+                        </div>
+
+                    </div>
+                </div>
+                <div *ngIf="!loading">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="alert alert-danger" role="alert" *ngIf="erro">
+                                <div *ngFor="let erro of erros">
+                                    {{erro}}<br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 border-start mb-3">
+                            <div class="text-gray-400 text-secondary">Nome</div>
+                            <div class="float-start fw-bold">{{agendaSelected?.nome}}&nbsp;</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 border-start mb-3">
+                            <div class="text-gray-400 text-secondary">Data</div>
+                            <div class="float-start fw-bold">{{viewDate(agendaSelected?.data)}}&nbsp;</div>
+                        </div>
+                        <div class="col-md-6 border-start mb-3">
+                            <div class="text-gray-400 text-secondary">Hora</div>
+                            <div class="float-start fw-bold">{{agendaSelected?.hora? agendaSelected?.hora: ""}}&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 border-start mb-3">
+                            <div class="text-gray-400 text-secondary">Descrição</div>
+                            <div class="float-start fw-bold">{{agendaSelected?.descricao}}&nbsp;</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 border-start mb-3">
+                            <div class="text-gray-400 text-secondary">Local</div>
+                            <div class="float-start fw-bold">{{agendaSelected?.local}}&nbsp;</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 border-start mb-3">
+                            <div class="text-gray-400 text-secondary">Participantes</div>
+                            <div class="float-start fw-bold">{{agendaSelected?.participantes}}&nbsp;</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 border-start mb-3">
+                            <div class="text-gray-400 text-secondary">Criado Por</div>
+                            <div class="float-start fw-bold">{{agendaSelected?.criadoPor}}&nbsp;</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <hr>
+                            <a class="float-start btn btn-outline-secondary" title="Voltar"
+                                (click)="closeModal()"><fa-icon [icon]="faCancel"></fa-icon></a>
+                            <span *ngIf="agendaSelected?.editar"><a class="float-end btn btn-outline-primary"
+                                    title="Editar Evento" (click)="getAgenda(agendaSelected!.id)"><fa-icon
+                                        [icon]="faEdit"></fa-icon></a></span>
+                            <a class="float-end btn btn-outline-danger me-3" title="Excluir Evento"
+                                (click)="delEvento(template, agendaSelected?.id!, agendaSelected?.nome!, viewDate(agendaSelected?.data), agendaSelected?.hora)"><fa-icon
+                                    [icon]="faTrash"></fa-icon></a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="showForm">
+
+    </div>
+    <div *ngIf="!showForm && !showView">
+
+    </div>
+</div>
+
+
+<ng-template #template>
+    <div class="modal-body p-4 text-center">
+        <div *ngIf="sendingDel">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div *ngIf="!sendingDel && errorDel">
+            <div class="alert alert-danger" role="alert">
+                {{errorDel}}
+            </div>
+        </div>
+        <div *ngIf="!sendingDel">
+            <h5 class="mb-3">Deseja excluir este evento?</h5>
+            <p class="mb-1">{{delEventoOps?.nome}}</p>
+            <p class="mb-1">{{delEventoOps?.data}}</p>
+            <p class="mb-1">{{delEventoOps?.hora}}</p>
+        </div>
+    </div>
+    <div class="modal-footer flex-nowrap p-0" *ngIf="!sendingDel">
+        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end"
+            (click)="handleDelete(delEventoOps?.id!)">Sim</button>
+        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"
+            (click)="modalRef?.hide()"><strong>Não</strong></button>
+    </div>
+</ng-template>

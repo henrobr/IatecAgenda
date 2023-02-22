@@ -1,0 +1,23 @@
+<lib-toastify-toast-container></lib-toastify-toast-container>
+<!-- <div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-nav></app-nav>
+            <div class="container-fluid">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div> -->
+<router-outlet></router-outlet>
+<ng-template #newEdit>
+    <div class="modal-body p-4 text-center">
+        <app-eventos></app-eventos>
+    </div>
+    <!-- <div class="modal-footer flex-nowrap p-0" *ngIf="!sendingDel">
+        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end"
+            (click)="handleDelete(delEventoOps?.id!)">Sim</button>
+        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"
+            (click)="modalRef?.hide()"><strong>Não</strong></button>
+    </div> -->
+</ng-template>
